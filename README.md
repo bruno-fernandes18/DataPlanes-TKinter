@@ -1,2 +1,2 @@
 # DataPlanes-TKinter
-Project inspired OpenSky Network's Aircraft Database, built in Python using the TKinter and SQLite3 libraries. Shows data of Airplanes and allows Input of New Airplanes Data.
+Project inspired by OpenSky Network's Aircraft Database, built in Python using the Tkinter and SQLite3 libraries. Displays data of airplanes and allows input of new airplane data.
