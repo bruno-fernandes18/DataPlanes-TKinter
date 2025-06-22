@@ -16,7 +16,7 @@ class AccountMenu:
             except Exception as e:
                 print(f'Error {e} while setting window deletion protocol.')
         
-        except Exception as e: ## Make Tkinter MessasgeBox
+        except Exception as e: # TODO: display this error using a Tkinter message box.
             print(f'Error {e} when booting class Account Menu.')
 
     def open_tab(self, control_LR: bool = True):

@@ -1,5 +1,18 @@
+from dataclasses import dataclass, field
+
+@dataclass
 class Landing:
-    '''Lainding object containing VAT, APC, and Distance data.'''
+    """Landing performance information."""
+
+    vat: int
+    distance: int
+    apc: str = field(init=False)
+
+    def __post_init__(self) -> None:
+        self.apc = self.find_apc(self.vat)
+
+class Landing:
+    '''Landing object containing VAT, APC, and Distance data.'''
     def __init__(self, vat: int, distance: int):
         '''Initializes Landing object.'''
         self.vat: int = vat
