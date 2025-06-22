@@ -1,6 +1,7 @@
 import modules as m
 from tkinter import messagebox
 from datetime import datetime
+from typing import Optional
 
 
 class DatabaseService:
@@ -87,7 +88,7 @@ class DatabaseService:
     def db_to_dict(self, id: int) -> dict:
         return self.db_to_obj(id).plane_to_dict()
 
-    def plane_to_db(self, user: str | None, plane: dict | None) -> bool:
+    def plane_to_db(self, user: Optional[str], plane: Optional[dict]) -> bool:
         if user is None:
             messagebox.showerror('Error', 'You must login to add a plane!')
             return False
@@ -217,3 +218,26 @@ class DatabaseService:
             'Success',
             "Plane Successfuly Deleted! If you created an Image you should consider deleting it in this script's directory.",
         )
+
+    def similar_planes(self, id: int, limit: int = 5) -> tuple:
+        """Return up to ``limit`` aircraft names similar to the given plane id."""
+        base_plane = self.db_to_dict(id)
+        ids, names = self.db_to_tuple()
+        comparisons = []
+        for pid, name in zip(ids, names):
+            if pid == id:
+                continue
+            other = self.db_to_dict(pid)
+            diff = 0
+            diff += 0 if other['wtc'] == base_plane['wtc'] else 1
+            diff += 0 if other['recat_eu'] == base_plane['recat_eu'] else 1
+            diff += abs(other['tas'] - base_plane['tas']) / base_plane['tas']
+            diff += abs(other['vat'] - base_plane['vat']) / base_plane['vat']
+            diff += abs(other['ld_distance'] - base_plane['ld_distance']) / base_plane['ld_distance']
+            diff /= 5
+            if diff <= 0.1:
+                comparisons.append((diff, name))
+        if not comparisons:
+            return ('No Similar Aircrafts',)
+        comparisons.sort(key=lambda x: x[0])
+        return tuple(name for _, name in comparisons[:limit])

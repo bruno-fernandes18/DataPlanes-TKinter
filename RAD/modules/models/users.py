@@ -12,6 +12,7 @@ def boot_user():
             print(f'Error {e} when booting user database.')
 
 def add_user(name: str, password: str):
+    boot_user()
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
         try:
@@ -20,15 +21,21 @@ def add_user(name: str, password: str):
         except sqlite3.Error as e:
             print(f'Error {e} when adding user to database.')
 
-def view_users():
+def view_users() -> list:
+    boot_user()
+    users: list = []
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
         try:
             cursor.execute('SELECT * FROM users')
+            users = cursor.fetchall()
         except sqlite3.Error as e:
             print(f'Error {e} when selecting user from database.')
+    return users
 
-def search_user(name: str):
+def search_user(name: str) -> list:
+    boot_user()
+    user: list = []
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
         try:
@@ -36,9 +43,10 @@ def search_user(name: str):
             user = cursor.fetchall()
         except sqlite3.Error as e:
             print(f'Error {e} when searching user from database.')
-        return user
+    return user
 
-def update_user(id: int, name: str, password: str):
+def update_user(id: int, name: str, password: str) -> None:
+    boot_user()
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
         try:
@@ -50,7 +58,8 @@ def update_user(id: int, name: str, password: str):
         except sqlite3.Error as e:
             print(f'Error {e} when updating user to database.')
 
-def delete_user(id: int):
+def delete_user(id: int) -> None:
+    boot_user()
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
         try:
