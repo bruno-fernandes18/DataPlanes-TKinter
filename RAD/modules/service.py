@@ -1,6 +1,7 @@
 import modules as m
 from tkinter import messagebox
 from datetime import datetime
+from typing import Optional
 
 
 class DatabaseService:
@@ -87,7 +88,7 @@ class DatabaseService:
     def db_to_dict(self, id: int) -> dict:
         return self.db_to_obj(id).plane_to_dict()
 
-    def plane_to_db(self, user: str | None, plane: dict | None) -> bool:
+    def plane_to_db(self, user: Optional[str], plane: Optional[dict]) -> bool:
         if user is None:
             messagebox.showerror('Error', 'You must login to add a plane!')
             return False
