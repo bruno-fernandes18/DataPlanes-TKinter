@@ -43,14 +43,15 @@ class AccountMenu:
 
     def login(self):
         self.button_callback(self.ent_nickname.get(), self.ent_password.get())
-        self.on_close
+        self.on_close()
     def register(self):
         self.button_callback(self.ent_nickname.get(), self.ent_password.get())
-        self.on_close
+        self.on_close()
     
     def on_close(self):
         try:
-            self.on_close_callback(self.sender)
+            if self.on_close_callback:
+                self.on_close_callback()
         except Exception as e:
             print(f'Error {e} when emitting close signal.')
         self.root.destroy()
