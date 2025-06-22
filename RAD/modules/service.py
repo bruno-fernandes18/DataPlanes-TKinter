@@ -184,7 +184,7 @@ class DatabaseService:
                 return user
             messagebox.showerror('Alert', 'Invalid Password')
             return None
-        messagebox.showerror('Invalid Username')
+        messagebox.showerror('Alert', 'Invalid Username')
         return None
 
     def register(self, name: str, password: str) -> bool:
