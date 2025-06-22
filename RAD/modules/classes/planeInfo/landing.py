@@ -1,5 +1,5 @@
 class Landing:
-    '''Lainding object containing VAT, APC, and Distance data.'''
+    '''Landing object containing VAT, APC, and Distance data.'''
     def __init__(self, vat: int, distance: int):
         '''Initializes Landing object.'''
         self.vat: int = vat
