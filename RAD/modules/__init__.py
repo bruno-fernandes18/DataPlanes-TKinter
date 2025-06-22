@@ -17,6 +17,7 @@ from .frames import (
     PlaneCreator,
     PlaneManager,
 )
+from .service import DatabaseService
 from .models import (
     add_plane,
     add_user,
@@ -71,4 +72,6 @@ __all__ = [
     "update_user",
     "view_planes",
     "view_users",
+    # services
+    "DatabaseService",
 ]
