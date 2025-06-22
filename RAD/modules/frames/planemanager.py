@@ -12,6 +12,7 @@ class PlaneManager:
             self.root.resizable(False,False)
 
             self.aircraft_dict = {}
+            self.id = None
 
             self.close_callback = close_callback
             self.delete_callback = delete_callback
@@ -77,7 +78,7 @@ class PlaneManager:
         self.btn_delete.config(state=tk.DISABLED)
         self.btn_update.config(state=tk.DISABLED)
     def on_close(self) -> dict:
-        if self.id:
+        if self.id is not None:
             try:
                 self.close_callback(self.id,self.aircraft_dict)
             except Exception as e:
