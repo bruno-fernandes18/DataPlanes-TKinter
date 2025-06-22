@@ -20,7 +20,7 @@ class Take_off:
                 return 'L'
             elif mtow < 136000:
                 return 'M'
-            elif mtow >= 13600:
+            else:
                 return 'H'
         except Exception as e:
             print(f'Error {e} on WTC calculus.')
