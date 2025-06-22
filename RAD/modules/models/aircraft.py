@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+from typing import Optional
 from .planedata import plane_objects
 
 def boot_plane() -> None:
@@ -31,6 +32,9 @@ def add_plane(data: tuple) -> None:
             print(f'Error {e} when adding plane to database.')
 
 def view_planes() -> list:
+    """Return all planes stored in the database."""
+    boot_plane()
+    aircrafts: list = []
     with sqlite3.connect('planes.db') as conn:
         cursor = conn.cursor()
         try:
@@ -38,19 +42,26 @@ def view_planes() -> list:
             aircrafts = cursor.fetchall()
         except sqlite3.Error as e:
             print(f'Error {e} when selecting planes from database.')
-        return aircrafts
+    return aircrafts
 
-def search_plane(id: int) -> tuple:
+def search_plane(id: int) -> Optional[tuple]:
+    """Return a single plane row by id or ``None`` if not found."""
+    boot_plane()
+    aircraft = None
     with sqlite3.connect('planes.db') as conn:
         cursor = conn.cursor()
         try:
             cursor.execute('SELECT * FROM aircrafts WHERE id=?', (id,))
-            aircraft = cursor.fetchall()[0]
+            result = cursor.fetchall()
+            if result:
+                aircraft = result[0]
         except sqlite3.Error as e:
             print(f'Error {e} when searching plane from database.')
-        return aircraft
+    return aircraft
 
 def delete_plane(id: int) -> None:
+    """Delete a plane by id if it exists."""
+    boot_plane()
     with sqlite3.connect('planes.db') as conn:
         cursor = conn.cursor()
         try:
