@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 
-@dataclass
+@dataclass(init=False)
 class Technical:
     """Technical information for an aircraft."""
 
@@ -18,6 +18,33 @@ class Technical:
     length: float
     height: float
     eu_specific_analysis: Optional[str] = None
+
+    def __init__(self,
+                 manufacturer: str,
+                 birth_year: int,
+                 model: str,
+                 variation: str,
+                 wingspan: float,
+                 wingposition: str,
+                 engineposition: str,
+                 tailconfig: str,
+                 landinggear: str,
+                 length: float,
+                 height: float,
+                 eu_specific_analysis: Optional[str] = None) -> None:
+        self.manufacturer = manufacturer
+        self.birth_year = birth_year
+        self.model = model
+        self.variation = variation
+        self.wingspan = wingspan
+        self.wing_position = wingposition
+        self.engn_position = engineposition
+        self.tail_config = tailconfig
+        self.land_gear = landinggear
+        self.length = length
+        self.height = height
+        self.eu_specific_analysis = eu_specific_analysis
+        self.__post_init__()
 
     def __post_init__(self) -> None:
         """Round numeric values and normalise optional fields."""
