@@ -19,8 +19,16 @@ class App:
         self.user = None
         self.window = m.MainMenu(self.root, self.user, self.open_airplane, self.open_creator, self.open_manager, self.regis_call, self.login_call, self.logoff_call)
     def open_mainmenu(self):
-        self.user = None
-        self.window = m.MainMenu(self.root, self.user,self.open_airplane, self.open_creator, self.open_manager, self.regis_call, self.login_call, self.logoff_call)
+        self.window = m.MainMenu(
+            self.root,
+            self.user,
+            self.open_airplane,
+            self.open_creator,
+            self.open_manager,
+            self.regis_call,
+            self.login_call,
+            self.logoff_call,
+        )
     def open_airplane(self):
         ids, names = self.service.db_to_tuple()
         self.window = m.AircraftMenu(self.root, names, ids, self.service.db_to_dict, self.open_mainmenu)
