@@ -9,4 +9,3 @@ try:
     __all__ = ["Approach", "Cruise", "Flight_level", "Landing", "Take_off", "Technical"]
 except Exception as e:
     print(f'Error {e} on PlaneInfo Module.')
-    input()

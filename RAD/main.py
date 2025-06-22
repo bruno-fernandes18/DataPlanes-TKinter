@@ -68,4 +68,3 @@ try:
     app = App()
 except Exception as e:
     print(f'Error {e} when starting Main script.')
-    input()
