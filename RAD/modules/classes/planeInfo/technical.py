@@ -25,10 +25,10 @@ class Technical:
                  model: str,
                  variation: str,
                  wingspan: float,
-                 wingposition: str,
-                 engineposition: str,
-                 tailconfig: str,
-                 landinggear: str,
+                 wing_position: str,
+                 engn_position: str,
+                 tail_config: str,
+                 land_gear: str,
                  length: float,
                  height: float,
                  eu_specific_analysis: Optional[str] = None) -> None:
@@ -37,10 +37,10 @@ class Technical:
         self.model = model
         self.variation = variation
         self.wingspan = wingspan
-        self.wing_position = wingposition
-        self.engn_position = engineposition
-        self.tail_config = tailconfig
-        self.land_gear = landinggear
+        self.wing_position = wing_position
+        self.engn_position = engn_position
+        self.tail_config = tail_config
+        self.land_gear = land_gear
         self.length = length
         self.height = height
         self.eu_specific_analysis = eu_specific_analysis
