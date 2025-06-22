@@ -31,6 +31,9 @@ class App:
         )
     def open_airplane(self):
         ids, names = self.service.db_to_tuple()
+        if not ids:
+            messagebox.showinfo('Alert', 'No aircraft in database.')
+            return
         self.window = m.AircraftMenu(
             self.root,
             names,
