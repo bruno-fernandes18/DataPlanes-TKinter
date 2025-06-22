@@ -43,10 +43,10 @@ class MainMenu:
     def open_manager(self):
         self.manager_callback()
     def open_register(self):
-        self.disable_buttons
+        self.disable_buttons()
         AccountMenu(self.root, self.reenable_buttons, self.register_callback).open_tab(False)
     def open_login(self):
-        self.disable_buttons
+        self.disable_buttons()
         AccountMenu(self.root, self.reenable_buttons, self.login_callback).open_tab(True)
     def do_login(self,user: str, password: str):
         if self.login_callback(user,password) == True:
