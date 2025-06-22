@@ -1,7 +1,10 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Approach:
-    '''Approach object containing IAS, MCS, and ROD data.'''
-    def __init__(self, ias: int, mcs: int, rod: int):
-        '''Initializes Approach object.'''
-        self.ias: int = ias
-        self.mcs: int = mcs
-        self.rod: int = rod
+    """Approach phase data."""
+
+    ias: int = 0
+    mcs: int = 0
+    rod: int = 0

@@ -1,17 +1,22 @@
+from dataclasses import dataclass, field
+
 from .technical import Technical
 
+
+@dataclass
 class Take_off:
-    '''Take Off object containing MTOW, WTC, RECAT-EU and V2 data.'''
-    def __init__(self, mtow: int, technical_param: Technical, distance: int, v2: int):
-        '''Initializes Take Off object.'''
-        try:
-            self.mtow: int = mtow        
-            self.wtc: str = self.find_wtc(mtow)
-            self.recat_eu: str = self.find_recat_eu(mtow, technical_param)
-            self.distance: int = distance
-            self.v2: int = v2
-        except Exception as e:
-            print('Error {e} when booting Take Off class')
+    """Take-off performance information."""
+
+    mtow: int
+    technical_param: Technical
+    distance: int
+    v2: int
+    wtc: str = field(init=False)
+    recat_eu: str = field(init=False)
+
+    def __post_init__(self) -> None:
+        self.wtc = self.find_wtc(self.mtow)
+        self.recat_eu = self.find_recat_eu(self.mtow, self.technical_param)
 
     def find_wtc(self, mtow: int) -> str:
         '''Returns WTC from MTOW in Kilograms.'''
