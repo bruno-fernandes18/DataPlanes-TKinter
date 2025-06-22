@@ -181,7 +181,7 @@ class DatabaseService:
         user = m.search_user(name)
         if user:
             if user[0][2] == password:
-                return user
+                return user[0][1]
             messagebox.showerror('Alert', 'Invalid Password')
             return None
         messagebox.showerror('Invalid Username')
