@@ -3,11 +3,13 @@ from tkinter import messagebox
 from .widgets import *
 
 class AircraftMenu:
-    def __init__(self, root: tk.Tk, names_tuple: tuple, planes_tuple: tuple, aircraft_callback, return_callback, similar_planes: tuple = ('','','','','')):
+    def __init__(self, root: tk.Tk, names_tuple: tuple, planes_tuple: tuple,
+                 aircraft_callback, return_callback, similar_callback):
         try:
             self.aircraft_callback = aircraft_callback
             self.return_callback = return_callback
-        except:
+            self.similar_callback = similar_callback
+        except Exception:
             messagebox.showerror('Error', 'Error loading Aircraft Menu callback functions.')
         
         try:
@@ -16,6 +18,7 @@ class AircraftMenu:
             self.tupled_names = names_tuple
             self.strvar_plane = tk.StringVar(value=self.tupled_names[0])
             self.strvar_default()
+            self.similar_list = self.similar_callback(self.current_id)
             try:
                 self.img = tk.PhotoImage(file=self.aircraft['image'])
             except:
@@ -139,10 +142,11 @@ class AircraftMenu:
         self.lbl_tail_config = MenuLabel(frm_recognition, f"Tail Setting: {self.aircraft['tail_configuration']}").GenericLabel()
         self.lbl_land_gear = MenuLabel(frm_recognition, f"Landing Gear: {self.aircraft['landing_gear']}").GenericLabel()
 
-        frm_similar = MenuFrame(frm_informations).GridFrame(2,3)
-        MenuLabel(frm_similar, 'Similar Aircrafts').GenericLabel()
-        for plane in similar_planes:
-            MenuLabel(frm_similar, plane).GenericLabel()
+        self.frm_similar = MenuFrame(frm_informations).GridFrame(2,3)
+        MenuLabel(self.frm_similar, 'Similar Aircrafts').GenericLabel()
+        self.similar_labels = []
+        for plane in self.similar_list:
+            self.similar_labels.append(MenuLabel(self.frm_similar, plane).GenericLabel())
         
         MenuButton(self.frm_main, 'BACK', self.return_command).MainButton()
 
@@ -150,13 +154,16 @@ class AircraftMenu:
         selected_id = self.strvar_plane.get()
         name_index = self.tupled_names.index(selected_id)
         id = self.tupled_plane[name_index]
+        self.current_id = id
         self.aircraft = self.aircraft_callback(id)
     
     def on_strvar_change(self, event=None):
         selected_id = self.strvar_plane.get()
         name_index = self.tupled_names.index(selected_id)
         id = self.tupled_plane[name_index]
+        self.current_id = id
         self.aircraft = self.aircraft_callback(id)
+        self.similar_list = self.similar_callback(id)
         self.update_labels()
 
     def update_labels(self):
@@ -205,11 +212,11 @@ class AircraftMenu:
         self.lbl_engn_position.config(text= f"Engine Position: {self.aircraft['engine_position']}")
         self.lbl_tail_config.config(text= f"Tail Setting: {self.aircraft['tail_configuration']}")
         self.lbl_land_gear.config(text= f"Landing Gear: {self.aircraft['landing_gear']}")
-
-        # frm_similar = MenuFrame(frm_informations).GridFrame(2,3)
-        # MenuLabel(frm_similar, 'Similar Aircrafts').GenericLabel()
-        # for plane in similar_planes:
-        #     MenuLabel(frm_similar, plane).GenericLabel()
+        for lbl in self.similar_labels:
+            lbl.destroy()
+        self.similar_labels.clear()
+        for plane in self.similar_list:
+            self.similar_labels.append(MenuLabel(self.frm_similar, plane).GenericLabel())
 
     def return_command(self):
         self.frm_main.destroy()

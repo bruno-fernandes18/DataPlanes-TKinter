@@ -31,7 +31,17 @@ class App:
         )
     def open_airplane(self):
         ids, names = self.service.db_to_tuple()
-        self.window = m.AircraftMenu(self.root, names, ids, self.service.db_to_dict, self.open_mainmenu)
+        if not ids:
+            messagebox.showinfo('Alert', 'No aircraft in database.')
+            return
+        self.window = m.AircraftMenu(
+            self.root,
+            names,
+            ids,
+            self.service.db_to_dict,
+            self.open_mainmenu,
+            self.service.similar_planes,
+        )
     def open_creator(self):
         self.creator = m.PlaneCreator(self.root, self.user, self.clse_creator)
         self.window.btn_database.config(state=tk.DISABLED)

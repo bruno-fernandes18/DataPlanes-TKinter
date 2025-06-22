@@ -46,15 +46,23 @@ class PlaneManager:
         self.tree.heading('Creation Date',text='Creation Date')
         self.tree.column('Creation Date',width=120)
     def on_button_click(self, event):
-        item = self.tree.selection()[0]
-        name = self.tree.item(item,'values')[1]
+        sel = self.tree.selection()
+        if not sel:
+            return
+        item = sel[0]
+        name = self.tree.item(item, 'values')[1]
         self.lbl_selection.config(text=name)
     def delete_plane(self):
         self.disable_buttons()
         self.root.grab_set()
-        if messagebox.askyesno('Plane Deleter', 'Are you sure?') == True:
-            item = self.tree.selection()[0]
-            id = self.tree.item(item,'values')[0]
+        if messagebox.askyesno('Plane Deleter', 'Are you sure?'):
+            sel = self.tree.selection()
+            if not sel:
+                self.reenable_buttons()
+                self.root.grab_release()
+                return
+            item = sel[0]
+            id = self.tree.item(item, 'values')[0]
             self.delete_callback(id)
             self.on_close()
         else:
@@ -63,8 +71,13 @@ class PlaneManager:
     def update_plane(self):
         self.disable_buttons()
         self.root.withdraw()
-        item = self.tree.selection()[0]
-        id = self.tree.item(item,'values')[0]
+        sel = self.tree.selection()
+        if not sel:
+            self.root.deiconify()
+            self.reenable_buttons()
+            return
+        item = sel[0]
+        id = self.tree.item(item, 'values')[0]
         UpdateMain(self.root, id, self.receive_plane)
     
     def receive_plane(self, id, airplane_dict):
