@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 
+
 @dataclass
 class Landing:
     """Landing performance information."""
@@ -11,23 +12,15 @@ class Landing:
     def __post_init__(self) -> None:
         self.apc = self.find_apc(self.vat)
 
-class Landing:
-    '''Landing object containing VAT, APC, and Distance data.'''
-    def __init__(self, vat: int, distance: int):
-        '''Initializes Landing object.'''
-        self.vat: int = vat
-        self.apc: str = self.find_apc(vat)
-        self.distance: int = distance
-
     def find_apc(self, vat: int) -> str:
-        '''Returns APC from VAT in knots.'''
+        """Return the Approach Category (APC) from the VAT in knots."""
         if vat < 91:
-            return 'A'
+            return "A"
         elif vat < 121:
-            return 'B'
+            return "B"
         elif vat < 141:
-            return 'C'
+            return "C"
         elif vat < 166:
-            return 'D'
+            return "D"
         elif vat >= 167:
-            return 'E'
+            return "E"
